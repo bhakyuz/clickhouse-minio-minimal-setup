@@ -38,6 +38,7 @@ services:
     image: minio/mc:RELEASE.2024-11-17T19-35-25Z
     volumes:
       - "./data/sample.csv:/sample.csv"
+      - "./data/sample-no-header.csv:/sample-no-header.csv"
     stdin_open: true
     tty: true
     entrypoint: >
@@ -46,6 +47,9 @@ services:
       /usr/bin/mc mb minio/test --ignore-existing;
       /usr/bin/mc cp sample.csv minio/test/sample.csv;
       /usr/bin/mc cp sample.csv minio/test/sample/date=2025-10-12/sample.csv;
+      /usr/bin/mc cp sample.csv 'minio/test/folder with whitespace/sample.csv';
+      /usr/bin/mc cp sample-no-header.csv minio/test/sample-no-header.csv;
+      /usr/bin/mc cp sample-no-header.csv minio/test/sample/date=2025-10-12/sample-no-header.csv;
       touch /tmp/ready;
       /bin/bash;
       "
